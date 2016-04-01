@@ -1,0 +1,12 @@
+connection <- file("household_power_consumption.txt")
+open(connection)
+header <- read.table(connection, nrow=1, sep=";", header=TRUE)
+power <- read.table(connection, skip=66635, nrow=2880, sep=";")
+close(connection)
+names(power) <- names(header)
+
+png("plot2.png")
+plot(power$Global_active_power, type="l", xlab="", ylab="Global Active Power (kilowatts)", xaxt="n")
+dataLength <- length(power$Global_active_power)
+axis(side=1, at=c(0, dataLength/2, dataLength), labels=c("Thu", "Fri", "Sat"))
+dev.off()
